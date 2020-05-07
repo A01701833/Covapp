@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Covapp</string>
+    <string name="titleFirstSlide">Hola Mundo 1</string>
+    <string name="titleSecondSlide">Hola Mundo 2</string>
+    <string name="titleThirdSlide">Hola Mundo 3</string>
+    <string name="title_activity_test">testActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
