@@ -44,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/txtUserName"
                 android:inputType="text"
                 android:textSize="15sp"
                 android:padding="8dp"
@@ -60,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/txtLastName"
                 android:inputType="text"
                 android:textSize="15sp"
                 android:padding="8dp"
@@ -76,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/txtMailUser"
                 android:inputType="textEmailAddress"
                 android:textSize="15sp"
                 android:padding="8dp"
@@ -92,6 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/txtPassword"
                 android:inputType="textPassword"
                 android:textSize="15sp"
                 android:padding="8dp"

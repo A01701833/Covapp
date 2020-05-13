@@ -3,6 +3,7 @@ package com.itesm.covapp.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import com.google.firebase.auth.FirebaseAuth
 import com.itesm.covapp.R
 import com.itesm.covapp.utils.Intents
 import java.util.*
@@ -19,11 +20,18 @@ class MainActivity : AppCompatActivity() {
 
         val seconds: Long = 3
         val time: Long = seconds*1000
+        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = mAuth.currentUser
 
         Timer().schedule(object: TimerTask() {
             override fun run() {
-                Intents.goToWelcome(this@MainActivity)
-                finish()
+                if(currentUser!=null){
+                    Intents.goToHome(this@MainActivity)
+                    finish()
+                }else{
+                    Intents.goToWelcome(this@MainActivity)
+                    finish()
+                }
             }
         }, time)
 
