@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.itesm.covapp.R
 import com.itesm.covapp.models.UserModel
 import com.itesm.covapp.utils.Intents
@@ -16,11 +20,8 @@ import kotlinx.android.synthetic.main.fragment_menu.*
 
 class MenuFragment: Fragment() {
 
-    //UserInfo
-    var userNameGlobal:String = " "
-
     //FirebaseInstance
-    private lateinit var userReference: DatabaseReference
+    private lateinit var database: DatabaseReference
 
     companion object {
         fun newInstance(): MenuFragment{
@@ -32,12 +33,13 @@ class MenuFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_menu,container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val uid = FirebaseAuth.getInstance().currentUser!!.uid
-        loadInfo(uid)
+
+        loadData()
         onClick()
     }
 
@@ -45,30 +47,39 @@ class MenuFragment: Fragment() {
         btnSettingsProfile.setOnClickListener {
             Intents.goToProfile(activity!!)
         }
+        btnLogOut.setOnClickListener{ view ->
+            Intents.goToLogin(activity!!)
+            activity!!.finish()
+            signOut()
+        }
     }
 
-    private fun loadInfo(id:String){
-        userReference = FirebaseDatabase.getInstance().reference
-            .child("users")
-            .child(id)
-        val postListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
-                val post = dataSnapshot.getValue(UserModel::class.java)
-                // [START_EXCLUDE]
-                post?.let {
-                    userNameGlobal = it.username.toString()
-                    txtWelcome.text = "¡Hola ${it.username.toString()}!"
+    private fun loadData(){
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val storage = FirebaseStorage.getInstance()
+        database = FirebaseDatabase.getInstance().reference.child("users").child(uid)
+        database.addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(item: DataSnapshot) {
+                val user = item.getValue(UserModel::class.java)
+                user?.let {
+                    txtWelcome.text = "¡Hola ${it.name}!"
                 }
             }
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
+            override fun onCancelled(p0: DatabaseError) {
+
             }
+        })
+
+        val ref = FirebaseStorage.getInstance().getReference("images").child(uid)
+        ref.downloadUrl.addOnSuccessListener {
+            Glide.with(activity!!)
+                .load(it)
+                .into(imgUserProfile)
         }
-        userReference.addValueEventListener(postListener)
     }
 
-    fun logOut(){
-
+    private fun signOut(){
+        FirebaseAuth.getInstance().signOut()
     }
+
 }

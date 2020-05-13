@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:fontFamily="@font/roboto_black"
-        android:text="¡Hola Javier!"
+        tools:text="¡Hola Javier!"
         app:layout_constraintBottom_toBottomOf="@+id/imgUserProfile"
         app:layout_constraintStart_toEndOf="@+id/imgUserProfile"
         app:layout_constraintTop_toTopOf="@+id/imgUserProfile" />
@@ -47,6 +47,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -122,6 +123,7 @@
                     android:text="Tus publicaciones" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/btnLogOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"

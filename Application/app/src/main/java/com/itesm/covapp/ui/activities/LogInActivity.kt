@@ -13,6 +13,7 @@ import com.itesm.covapp.R
 import com.itesm.covapp.utils.Intents
 import com.itesm.covapp.utils.Msn
 import com.itesm.covapp.utils.PreferencesManager
+import com.itesm.covapp.utils.Utils
 import kotlinx.android.synthetic.main.activity_log_in.*
 import kotlinx.android.synthetic.main.pop_loading_progress.*
 
@@ -28,7 +29,13 @@ class LogInActivity : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         supportActionBar?.hide()
         manager = PreferencesManager(this)
+        val utils = Utils(this)
+        permissions(utils)
         onClick()
+    }
+
+    private fun permissions(utils: Utils){
+        utils.permission()
     }
 
     private fun onClick(){
