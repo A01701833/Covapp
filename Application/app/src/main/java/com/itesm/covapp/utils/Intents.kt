@@ -29,4 +29,9 @@ object Intents {
         val intent = Intent(context, SignUpActivity::class.java)
         context.startActivity(intent)
     }
+
+    fun goToMakePost(context: Context){
+        val intent = Intent(context,MakeAPostActivity::class.java)
+        context.startActivity(intent)
+    }
 }

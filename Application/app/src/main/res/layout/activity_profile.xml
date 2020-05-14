@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/imgUserProfile"
+        android:id="@+id/UserProfile"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/ic_launcher_background"
@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="@+id/dividerProfile"
         app:layout_constraintStart_toStartOf="@+id/dividerProfile" />
     <androidx.core.widget.NestedScrollView
-        app:layout_constraintTop_toBottomOf="@+id/imgUserProfile"
+        app:layout_constraintTop_toBottomOf="@+id/UserProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

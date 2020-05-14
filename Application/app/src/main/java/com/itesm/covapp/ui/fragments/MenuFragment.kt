@@ -63,6 +63,7 @@ class MenuFragment: Fragment() {
                 val user = item.getValue(UserModel::class.java)
                 user?.let {
                     txtWelcome.text = "¡Hola ${it.name}!"
+                    txtLocation.text = "Tu ubicación: ${it.state}"
                 }
             }
             override fun onCancelled(p0: DatabaseError) {

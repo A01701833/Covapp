@@ -10,6 +10,9 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -31,6 +34,7 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var mDatabase : DatabaseReference
 
     var type:String =""
+    var state:String =""
     var uriProfile:Uri? =null
     var currentPath:String? = null
     val TAKE_PICTURE = 1
@@ -41,7 +45,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         database = FirebaseDatabase.getInstance().reference.child("users")
-
+        spinnerAdapter()
         onClick()
     }
 
@@ -81,7 +85,7 @@ class SignUpActivity : AppCompatActivity() {
                 //else
                 val id = it.result?.user?.uid
                 if (id != null) {
-                    writeNewUser(id,userName,lastName)
+                    writeNewUser(id,userName,lastName,state)
                     saveImageOnFireBase(id)
                 }
                 Intents.goToHome(this)
@@ -93,9 +97,11 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    private fun writeNewUser(userId: String, name: String, lastName:String) {
+    private fun writeNewUser(userId: String, name: String, lastName:String,state:String) {
         database.child(userId).child("name").setValue(name)
         database.child(userId).child("lastName").setValue(lastName)
+        database.child(userId).child("lastName").setValue(lastName)
+        database.child(userId).child("state").setValue(state)
     }
 
     private fun saveImageOnFireBase(id: String) {
@@ -107,6 +113,24 @@ class SignUpActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d("Register", "Success To upload Photo")
             }
+    }
+
+    private fun spinnerAdapter(){
+        //  Adapter States
+        val adapterStates = ArrayAdapter.createFromResource(this,R.array.states,android.R.layout.simple_spinner_item)
+        adapterStates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        txtSpinerState.adapter = adapterStates
+
+        txtSpinerState.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                // either one will work as well
+                state = adapterStates.getItem(position) as String
+            }
+        }
     }
 
     private fun dispatchGalleryIntent() {
