@@ -22,7 +22,8 @@
 
 
     <LinearLayout
-        android:layout_margin="24dp"
+        android:layout_margin="8dp"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,6 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPost"
             tools:listitem="@layout/item_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
