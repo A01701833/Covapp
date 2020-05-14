@@ -42,4 +42,12 @@
         <item>Yucatán</item>
         <item>Zacatecas</item>
     </string-array>
+
+    <string-array name="topics">
+        <item>Comida</item>
+        <item>Enfermo</item>
+        <item>Actividad</item>
+        <item>Precaución</item>
+        <item>Ayuda</item>
+    </string-array>
 </resources>
