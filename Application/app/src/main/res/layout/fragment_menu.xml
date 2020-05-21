@@ -59,6 +59,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/btnChooseYourCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -101,27 +102,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="Ajustes de cuenta" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/btn_rounded_white_transparent"
-                android:elevation="10dp"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_blog" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Tus publicaciones" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/btnLogOut"

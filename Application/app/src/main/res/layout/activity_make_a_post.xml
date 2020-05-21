@@ -93,8 +93,8 @@
             android:text="Estado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <Spinner
-            android:id="@+id/spinnerStates"
+        <TextView
+            android:id="@+id/txtState"
             android:layout_marginVertical="4dp"
             android:padding="8dp"
             android:background="@drawable/btn_rounded_white"

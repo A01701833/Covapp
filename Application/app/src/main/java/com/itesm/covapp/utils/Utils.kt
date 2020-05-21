@@ -3,6 +3,10 @@ package com.itesm.covapp.utils
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -12,6 +16,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 class Utils(val context: Context){
     fun permission(){
         requestCameraPermission(context)
+        checLocationPermission(context)
     }
     private fun requestCameraPermission(context: Context) {
         Dexter.withActivity(context as Activity?)
@@ -45,4 +50,13 @@ class Utils(val context: Context){
             .onSameThread()
             .check()
     }
+
+    private fun checLocationPermission(context: Context): Boolean {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+        return false
+    }
+
 }

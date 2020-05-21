@@ -34,4 +34,9 @@ object Intents {
         val intent = Intent(context,MakeAPostActivity::class.java)
         context.startActivity(intent)
     }
+
+    fun goToChooseYourCity(context: Context){
+        val intent = Intent(context,YourCityActivity::class.java)
+        context.startActivity(intent)
+    }
 }

@@ -44,6 +44,10 @@ class MenuFragment: Fragment() {
     }
 
     private fun onClick(){
+        btnChooseYourCity.setOnClickListener {
+            Intents.goToChooseYourCity(activity!!)
+        }
+
         btnSettingsProfile.setOnClickListener {
             Intents.goToProfile(activity!!)
         }
