@@ -16,7 +16,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 class Utils(val context: Context){
     fun permission(){
         requestCameraPermission(context)
-        checLocationPermission(context)
+        checkLocationPermission(context)
     }
     private fun requestCameraPermission(context: Context) {
         Dexter.withActivity(context as Activity?)
@@ -51,7 +51,7 @@ class Utils(val context: Context){
             .check()
     }
 
-    private fun checLocationPermission(context: Context): Boolean {
+    private fun checkLocationPermission(context: Context): Boolean {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return true
