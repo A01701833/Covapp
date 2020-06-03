@@ -1,11 +1,13 @@
 package com.itesm.covapp.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.itesm.covapp.R
+import com.itesm.covapp.activity_map
 
 class PlaceFragment: Fragment()  {
     companion object {
@@ -17,8 +19,8 @@ class PlaceFragment: Fragment()  {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_place,container, false)
-
-
+        var toMapActivity: Intent = Intent(this.context, activity_map::class.java)
+        this.startActivity(toMapActivity)
+        return inflater.inflate(R.layout.fragment_place, container, false)
     }
 }
