@@ -64,6 +64,7 @@ class MenuFragment: Fragment() {
             val photoUrl = user.photoUrl
             Glide.with(requireActivity())
                 .load(photoUrl)
+                .error(R.drawable.ic_user)
                 .into(imgUserProfile)
         }
     }
@@ -93,6 +94,7 @@ class MenuFragment: Fragment() {
         ref.downloadUrl.addOnSuccessListener {
             Glide.with(requireActivity())
                 .load(it)
+                .error(R.drawable.ic_user)
                 .into(imgUserProfile)
         }
     }
