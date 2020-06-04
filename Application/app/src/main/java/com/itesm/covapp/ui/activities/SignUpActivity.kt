@@ -43,7 +43,6 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-
         database = FirebaseDatabase.getInstance().reference.child("users")
         spinnerAdapter()
         onClick()
@@ -62,7 +61,6 @@ class SignUpActivity : AppCompatActivity() {
     private fun registerUser(){
         // Database reference pointing to demo node
         val userName = txtUserName.text.toString()
-        val lastName = txtLastName.text.toString()
         val email = txtMailUser.text.toString()
         val password = txtPassword.text.toString()
         val passwordConfirm = txtPassword.text.toString()
@@ -77,15 +75,13 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        println(userName + lastName + email + password)
-
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {
                 if(!it.isSuccessful) return@addOnCompleteListener
                 //else
                 val id = it.result?.user?.uid
                 if (id != null) {
-                    writeNewUser(id,userName,lastName,state)
+                    writeNewUser(id,userName,state)
                     saveImageOnFireBase(id)
                 }
                 Intents.goToHome(this)
@@ -97,10 +93,8 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    private fun writeNewUser(userId: String, name: String, lastName:String,state:String) {
+    private fun writeNewUser(userId: String, name: String,state:String) {
         database.child(userId).child("name").setValue(name)
-        database.child(userId).child("lastName").setValue(lastName)
-        database.child(userId).child("lastName").setValue(lastName)
         database.child(userId).child("state").setValue(state)
     }
 

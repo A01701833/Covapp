@@ -60,7 +60,11 @@ class YourCityActivity : AppCompatActivity() {
             override fun onDataChange(item: DataSnapshot) {
                 val user = item.getValue(UserModel::class.java)
                 user?.let {
-                    txtMyCity.text = it.state.toString()
+                    if(it.state!!.isEmpty()){
+                        txtMyCity.text = "Todavía no has guardado tu estado"
+                    }else{
+                        txtMyCity.text = it.state.toString()
+                    }
                 }
             }
             override fun onCancelled(p0: DatabaseError) {

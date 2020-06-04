@@ -1,22 +1,24 @@
 package com.itesm.covapp.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.itesm.covapp.R
 import com.itesm.covapp.models.UserModel
 import com.itesm.covapp.utils.Intents
-import com.itesm.covapp.utils.Msn
 import kotlinx.android.synthetic.main.fragment_menu.*
+import kotlinx.android.synthetic.main.pop_up_setlocation.*
+import kotlinx.android.synthetic.main.pop_up_setlocation.view.*
 
 class MenuFragment: Fragment() {
 
@@ -33,41 +35,53 @@ class MenuFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_menu,container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         loadData()
+        loadGoogleData()
         onClick()
     }
 
     private fun onClick(){
         btnChooseYourCity.setOnClickListener {
-            Intents.goToChooseYourCity(activity!!)
+            Intents.goToChooseYourCity(requireActivity())
         }
 
         btnSettingsProfile.setOnClickListener {
-            Intents.goToProfile(activity!!)
+            Intents.goToProfile(requireActivity())
         }
-        btnLogOut.setOnClickListener{ view ->
-            Intents.goToLogin(activity!!)
-            activity!!.finish()
+        btnLogOut.setOnClickListener{
             signOut()
+        }
+    }
+
+    private fun loadGoogleData(){
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            // Name, email address, and profile photo Url
+            val photoUrl = user.photoUrl
+            Glide.with(requireActivity())
+                .load(photoUrl)
+                .into(imgUserProfile)
         }
     }
 
     private fun loadData(){
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
-        val storage = FirebaseStorage.getInstance()
         database = FirebaseDatabase.getInstance().reference.child("users").child(uid)
         database.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(item: DataSnapshot) {
                 val user = item.getValue(UserModel::class.java)
                 user?.let {
                     txtWelcome.text = "¡Hola ${it.name}!"
-                    txtLocation.text = "Tu ubicación: ${it.state}"
+                    if (it.state!!.isEmpty()){
+                        showAlertDialog()
+                        txtLocation.text = "Tu ubicación: Selecciona aquí tu estado"
+                    }else{
+                        txtLocation.text = "Tu ubicación: ${it.state}"
+                    }
                 }
             }
             override fun onCancelled(p0: DatabaseError) {
@@ -77,7 +91,7 @@ class MenuFragment: Fragment() {
 
         val ref = FirebaseStorage.getInstance().getReference("images").child(uid)
         ref.downloadUrl.addOnSuccessListener {
-            Glide.with(activity!!)
+            Glide.with(requireActivity())
                 .load(it)
                 .into(imgUserProfile)
         }
@@ -85,6 +99,20 @@ class MenuFragment: Fragment() {
 
     private fun signOut(){
         FirebaseAuth.getInstance().signOut()
+        Intents.goToLogin(requireActivity())
+        requireActivity().finish()
+    }
+
+    private fun showAlertDialog() {
+        val dialogBuilder = AlertDialog.Builder(requireActivity())
+        val view = this.layoutInflater.inflate(R.layout.pop_up_setlocation,null)
+        dialogBuilder.setView(view)
+        val alertDialog = dialogBuilder.create()
+
+        alertDialog.show()
+        view.btnSaveLocation.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 
 }

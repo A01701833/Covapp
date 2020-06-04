@@ -47,7 +47,7 @@ class HomeFragment: Fragment() {
 
     private fun onClick(){
         btnAddPost.setOnClickListener {
-            Intents.goToMakePost(activity!!)
+            Intents.goToMakePost(requireActivity())
         }
     }
 
