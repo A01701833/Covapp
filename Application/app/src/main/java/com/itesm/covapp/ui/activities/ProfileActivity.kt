@@ -76,7 +76,8 @@ class ProfileActivity : AppCompatActivity()  {
         ref.downloadUrl.addOnSuccessListener {
             Glide.with(this)
                 .load(it)
-                .into(UserProfile)
+                .error(R.drawable.ic_user)
+                .into(imgUserProfile)
         }
     }
 
