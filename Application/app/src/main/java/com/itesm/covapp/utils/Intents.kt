@@ -2,6 +2,7 @@ package com.itesm.covapp.utils
 
 import android.content.Context
 import android.content.Intent
+import com.itesm.covapp.activity_map
 import com.itesm.covapp.ui.activities.*
 
 object Intents {
@@ -37,6 +38,11 @@ object Intents {
 
     fun goToChooseYourCity(context: Context){
         val intent = Intent(context,YourCityActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    fun goToMap(context: Context){
+        val intent = Intent(context, activity_map::class.java)
         context.startActivity(intent)
     }
 }
