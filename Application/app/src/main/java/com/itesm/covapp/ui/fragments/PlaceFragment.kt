@@ -1,29 +1,26 @@
 package com.itesm.covapp.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.itesm.covapp.R
-import com.itesm.covapp.activity_map
 import com.itesm.covapp.models.PostModel
 import com.itesm.covapp.models.UserModel
-import com.itesm.covapp.ui.adapters.PostAdapter
 import com.itesm.covapp.utils.Intents
 import com.itesm.covapp.utils.Msn
 import kotlinx.android.synthetic.main.fragment_place.*
-import kotlinx.android.synthetic.main.home_fragment.*
 
 class PlaceFragment: Fragment()  {
 
     //FirebaseInstance
     private lateinit var userDatabase: DatabaseReference
     private lateinit var postDatabase: DatabaseReference
+
+    val orders = ArrayList<PostModel>()
 
     companion object {
         fun newInstance(): PlaceFragment{
@@ -46,7 +43,7 @@ class PlaceFragment: Fragment()  {
 
     private fun onClick(){
         btnGoToMap.setOnClickListener {
-            Intents.goToMap(requireActivity())
+            Intents.goToMap(requireActivity(),orders)
         }
     }
 
@@ -76,7 +73,6 @@ class PlaceFragment: Fragment()  {
             }
 
             override fun onDataChange(data: DataSnapshot) {
-                val orders = ArrayList<PostModel>()
                 for(child in data.children.iterator()){
                     val order = child.getValue(PostModel::class.java)
                     if(order != null){

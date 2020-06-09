@@ -19,9 +19,18 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.itesm.covapp.models.PostModel
+import com.itesm.covapp.models.UserModel
+import com.itesm.covapp.utils.Msn
+import kotlinx.android.synthetic.main.activity_map.*
+import kotlinx.android.synthetic.main.fragment_place.*
 import java.util.*
 
 class activity_map : AppCompatActivity(), OnMapReadyCallback {
+
+    var post = ArrayList<PostModel>()
 
     private lateinit var MAP: GoogleMap
     private lateinit var userLastLocation: Location
@@ -38,6 +47,10 @@ class activity_map : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        var bundle :Bundle ?=intent.extras
+        post = bundle!!.get("postList") as ArrayList<PostModel>
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -63,13 +76,22 @@ class activity_map : AppCompatActivity(), OnMapReadyCallback {
                  Los marcadores se colocan de la siguiente forma. Sustituiremos la latitud y longitud por las coordenadas de firebase.
                  En la etiqueta del marcador también debemos poner los datos de firebase.
                 */
-                MAP.addMarker(
-                    MarkerOptions()
-                        .position(LatLng(userLastLocation.latitude, userLastLocation.longitude))
-                        .title("Título del pin") // Por ejemplo: "Sospechoso"
-                        .snippet("Descripción del pin") // Por ejemplo: "Bla bla bla"
-                )
-
+                for(i in 0 until post.size){
+                    val title = post[i].title
+                    val topic = post[i].topic
+                    val latitudePost = post[i].latitude
+                    val longitudePost = post[i].longitude
+//                    Log.d("DebugMap", post[i].latitude)
+//                    Log.d("DebugMap", post[i].longitude)
+//                    Log.d("DebugMap", userLastLocation.latitude.toString())
+//                    Log.d("DebugMap", userLastLocation.longitude.toString())
+                    MAP.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(latitudePost!!.toDouble(), longitudePost!!.toDouble()))
+                            .title(topic) // Por ejemplo: "Sospechoso"
+                            .snippet(title) // Por ejemplo: "Bla bla bla"
+                    )
+                }
 
             }
         }
@@ -88,4 +110,5 @@ class activity_map : AppCompatActivity(), OnMapReadyCallback {
             Log.e(TAG, "No se encontró el estilo. Error: ", e)
         }
     }
+
 }

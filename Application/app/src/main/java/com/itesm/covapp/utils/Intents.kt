@@ -3,6 +3,7 @@ package com.itesm.covapp.utils
 import android.content.Context
 import android.content.Intent
 import com.itesm.covapp.activity_map
+import com.itesm.covapp.models.PostModel
 import com.itesm.covapp.ui.activities.*
 
 object Intents {
@@ -41,8 +42,12 @@ object Intents {
         context.startActivity(intent)
     }
 
-    fun goToMap(context: Context){
+    fun goToMap(
+        context: Context,
+        orders: ArrayList<PostModel>
+    ){
         val intent = Intent(context, activity_map::class.java)
+        intent.putExtra("postList",orders)
         context.startActivity(intent)
     }
 }
